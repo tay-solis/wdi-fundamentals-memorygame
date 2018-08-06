@@ -1,0 +1,53 @@
+body {
+  text-align: center;
+  font-family: 'Oswald', sans-serif;
+  color: #0D2C40;
+  margin: 10px;
+}
+h1, h2, h3, a{
+  font-family: 'Raleway', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 45px;
+}
+
+h2{
+  font-size: 20px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 26px;
+}
+
+ul{
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+a{
+  color: #F15B31;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 0 15px;
+
+}
+.game{
+  width: 900px;
+  margin: 0 auto;
+}
+
+.card{
+  float: left;
+  margin: 25px
+}
+
+.instructions{
+  padding: 2em;
+}
