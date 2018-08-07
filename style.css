@@ -1,8 +1,11 @@
+html{
+    width: 100%;
+}
 body {
   text-align: center;
   font-family: 'Oswald', sans-serif;
   color: #0D2C40;
-  margin: 10px;
+  margin: 0;
 }
 h1, h2, h3, a{
   font-family: 'Raleway', sans-serif;
@@ -13,6 +16,7 @@ h1, h2, h3, a{
 h1 {
   text-align: center;
   font-size: 45px;
+  margin: 0;
 }
 
 h2{
@@ -35,17 +39,43 @@ a{
   text-transform: uppercase;
   text-decoration: none;
   font-size: 18px;
-  margin: 0 15px;
+  margin: 0 20px;
 
 }
-.game{
+
+header{
+  background-color: #F15B31;
+  color: #FFF;
+  padding: 30px 20px;
+  margin: 0;
+}
+nav{
+  background-color: #00A6B3;
+  color: #FFF;
+  padding: 8px;
+}
+
+nav a{
+  color: #FFF;
+}
+
+main{
   width: 900px;
-  margin: 0 auto;
+  margin: 15px auto;
+}
+
+/* nav .selected{
+  background-color: #F15B31;
+  color: #FFF;
+  padding: 8px;
+} */
+
+.game{
 }
 
 .card{
   float: left;
-  margin: 25px
+  margin: 25px;
 }
 
 .instructions{
