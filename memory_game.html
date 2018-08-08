@@ -10,16 +10,16 @@
     <header>
       <h1>Memory Game</h1>
     </header>
-    
+
     <nav>
       <ul>
-        <a href="#" class="selected">Instructions</a>
-        <a href="#">Game</a>
+        <a href="#instructions" class="selected">Instructions</a>
+        <a href="#game">Game</a>
       </ul>
     </nav>
 
     <main>
-      <div class="instructions">
+      <div class="instructions" name="instructions">
         <h2>Instructions</h2>
         <p>
           Concentration, also known as Match Match, Memory, Pelmanism, Shinkei-suijaku,
@@ -29,7 +29,7 @@
         </p>
       </div>
 
-      <div class="game">
+      <div class="game" name="game">
         <img class="card" src="images/back.png" alt="Queen of Diamonds">
         <img class="card" src="images/back.png" alt="Queen of Hearts">
         <img class="card" src="images/back.png" alt="King of Diamonds">
@@ -40,6 +40,11 @@
         <img class="card" src="images/back.png" alt="King of Hearts">
       </div>
     </main>
+
+    <footer class="clearfix">
+      <p class="copyright">Copyright 2018</p>
+      <p class="message">Created with &hearts; by <span class="name">GA</span> & <span class="name">Tay</span></p>
+    </footer>
 
     <script type="text/javascript" src="main.js"></script>
   </body>

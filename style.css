@@ -40,7 +40,12 @@ a{
   text-decoration: none;
   font-size: 18px;
   margin: 0 20px;
+  border-bottom: 2px solid transparent;
+  padding: 8px;
+}
 
+a:hover{
+  border: 2px solid white;
 }
 
 header{
@@ -64,6 +69,18 @@ main{
   margin: 15px auto;
 }
 
+footer{
+  text-transform: uppercase;
+  padding: 0 20px;
+  margin-bottom: 0;
+  font-family: 'Raleway', sans-serif;
+  background-color: #0D2C40;
+  color: white;
+  font-size: 12px;
+  letter-spacing: 0.8em;
+  clear:both;
+}
+
 /* nav .selected{
   background-color: #F15B31;
   color: #FFF;
@@ -80,4 +97,25 @@ main{
 
 .instructions{
   padding: 2em;
+}
+
+.name{
+  color: #F15B31;
+  font-weight: 700;
+}
+
+.copyright{
+  float: left;
+}
+.message{
+  float: right;
+}
+
+.clearfix:after {
+visibility: hidden;
+display: block;
+content: " ";
+clear: both;
+height: 0;
+font-size: 0;
 }
