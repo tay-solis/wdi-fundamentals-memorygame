@@ -93,6 +93,7 @@ footer{
 .card{
   float: left;
   margin: 25px;
+  width: 175px;
 }
 
 .instructions{
