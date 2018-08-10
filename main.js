@@ -7,7 +7,9 @@ const cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen
 //For each card in play, creates an array containing the image element.
 let cards = document.querySelectorAll(".card");
 let numberOfCardsInPlay = cards.length;
+let currentBoard = [];
 let cardsInPlay = [];
+let doneCards = [];
 
 
 
@@ -22,20 +24,33 @@ class Card {
     this.filePath = "playing-cards-assets/svg-cards/"+ value + "_of_" + suite + ".svg";
   }
 }
+  let done = [];
+
+  //Check if an array already includes check (suite and value of cards). If it does, generates a new card.
+  function checkIfIncludes(arr, check, card, i){
+    if(!arr.includes(check)){
+      arr.push(check);
+      return card;
+    } else{
+      card = randomCard(i);
+      check = card.suite + card.value;
+      checkIfIncludes(arr, check, card, i);
+    }
+  }
 
 //Creates an array of Card objects, representing the game board, based on the number of cards on the board.
 //For each card, there will be a card with the same suite and value.
 function generateCards(){
-  let done = [];
+
   for(let i = 0; i < numberOfCardsInPlay / 2; i++){
     let card = randomCard(i);
     let check = card.suite + card.value;
-    card = checkIfIncludes(done, check);
-    cardsInPlay.push(card);
-    cardsInPlay.push(card);
+    card = checkIfIncludes(done, check, card, i);
+    currentBoard.push(card);
+    currentBoard.push(card);
   }
-  shuffle(cardsInPlay);
-  console.log(cardsInPlay);
+  shuffle(currentBoard);
+  console.log(currentBoard);
 }
 
 //Shuffles an array
@@ -49,17 +64,6 @@ function shuffle(arr){
   return arr;
 }
 
-//Check if an array already includes check (suite and value of cards). If it does, generates a new card.
-function checkIfIncludes(arr, check, i){
-  if(!arr.includes(check)){
-    arr.push(check);
-    return randomCard(i);
-  } else{
-    card = randomCard(i)
-    check = card.suite + card.value;
-    checkIfIncludes(arr, check);
-  }
-}
 
 //Randomly generates a suite and value.
 function randomCard(i){
@@ -68,17 +72,40 @@ function randomCard(i){
   let card = new Card(suite, value);
   return card;
 }
-//Randomly selects half of the positions on the board.
+
+function flipCard(i){
+  if(doneCards.includes(cards[i])) return;
+  if(cards[i].getAttribute("src") == "images/back.png"){
+    cards[i].setAttribute("src", currentBoard[i].filePath);
+    cards[i].classList.add("shown");
+  } else if(cards[i].getAttribute("src") == currentBoard[i].filePath){
+    cards[i].setAttribute("src", "images/back.png");
+    cards[i].classList.remove("shown");
+  }
+}
+
+function checkForMatch(){
+  if(cardsInPlay[0].getAttribute("alt") === cardsInPlay[1].getAttribute("alt")){
+    console.log("Matched " + cardsInPlay[0].getAttribute("alt") + " and " + cardsInPlay[0].getAttribute("alt"));
+    doneCards.push(cardsInPlay[0]);
+    doneCards.push(cardsInPlay[1]);
+    cardsInPlay = [];
+  } else{
+    
+  }
+}
 
 
-//Assigns the card value/suite to the card image elements according to the position on the screen.
-//Sets up event listener for each card.
 function setUpCards(){
   generateCards();
   for (let i = 0; i < numberOfCardsInPlay; i++){
-      cards[i].setAttribute("alt", cardsInPlay[i].value + " of " + cardsInPlay[i].suite);
+      cards[i].setAttribute("alt", currentBoard[i].value + " of " + currentBoard[i].suite);
       cards[i].addEventListener("click", function(){
-        cards[i].setAttribute("src", cardsInPlay[i].filePath);
+        if(!doneCards.includes(cards[i])){
+          flipCard(i);
+          cardsInPlay.push(cards[i]);
+          if(cardsInPlay.length > 1) checkForMatch();
+        }
       });
   }
 }
