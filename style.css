@@ -99,6 +99,7 @@ footer{
 
 .instructions{
   padding: 2em;
+  display: block;
 }
 
 .name{
@@ -120,4 +121,8 @@ content: " ";
 clear: both;
 height: 0;
 font-size: 0;
+}
+
+.hidden{
+  display:none;
 }

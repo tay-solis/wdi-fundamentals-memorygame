@@ -2,13 +2,18 @@
 //Possible suites and values for a standard deck of cards
 const suites = ["Hearts", "Diamonds", "Clubs", "Spades"];
 const cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"];
+let won = false;
 
 
 //For each card in play, creates an array containing the image element.
 let cards = document.querySelectorAll(".card");
+//The number of cards to be generated
 let numberOfCardsInPlay = cards.length;
+//Contains the Card objects of the game board.
 let currentBoard = [];
+//Contans the two cards that the player has selected.
 let cardsInPlay = [];
+//Contains cards that have already been matched.
 let doneCards = [];
 
 
@@ -30,7 +35,9 @@ class Card {
   function checkIfIncludes(arr, check, card, i){
     if(!arr.includes(check)){
       arr.push(check);
-      return card;
+      currentBoard.push(card);
+      currentBoard.push(card);
+      return;
     } else{
       card = randomCard(i);
       check = card.suite + card.value;
@@ -45,9 +52,7 @@ function generateCards(){
   for(let i = 0; i < numberOfCardsInPlay / 2; i++){
     let card = randomCard(i);
     let check = card.suite + card.value;
-    card = checkIfIncludes(done, check, card, i);
-    currentBoard.push(card);
-    currentBoard.push(card);
+    checkIfIncludes(done, check, card, i);
   }
   shuffle(currentBoard);
   console.log(currentBoard);
@@ -73,6 +78,7 @@ function randomCard(i){
   return card;
 }
 
+//"Flips" the card to display either the front or back image.
 function flipCard(i){
   if(doneCards.includes(cards[i])) return;
   if(cards[i].getAttribute("src") == "images/back.png"){
@@ -84,6 +90,16 @@ function flipCard(i){
   }
 }
 
+//Returns index of card in array. If it is not present, returns -1.
+//Because Node Lists dont have indexOf...
+function findCard(arr, card){
+  for (let i = 0; i < arr.length; i++){
+    if(cards[i] == card) return i;
+  }
+  return -1;
+}
+
+//Checks if the cards in play match. If they do, they are added to doneCards. If not, they are reset.
 function checkForMatch(){
   if(cardsInPlay[0].getAttribute("alt") === cardsInPlay[1].getAttribute("alt")){
     console.log("Matched " + cardsInPlay[0].getAttribute("alt") + " and " + cardsInPlay[0].getAttribute("alt"));
@@ -91,11 +107,17 @@ function checkForMatch(){
     doneCards.push(cardsInPlay[1]);
     cardsInPlay = [];
   } else{
-    
+    setTimeout(function(){
+      flipCard(findCard(cards, cardsInPlay[0]));
+      flipCard(findCard(cards, cardsInPlay[1]));
+      cardsInPlay = [];
+    }, 1000);
   }
 }
 
-
+//Generates a deck of random pairs of cards, sets the attributes of the HTML files,
+//and adds event listener so every time the player clicks two cards, it checks
+//if there was a match.
 function setUpCards(){
   generateCards();
   for (let i = 0; i < numberOfCardsInPlay; i++){
@@ -106,11 +128,17 @@ function setUpCards(){
           cardsInPlay.push(cards[i]);
           if(cardsInPlay.length > 1) checkForMatch();
         }
+        if(doneCards.length == 8){
+          document.getElementById("message").innerHTML = "Congrats! You win!";
+        }
       });
   }
 }
 
 function init(){
+  document.getElementById("instructionsLink").addEventListener("click", function(){
+    document.getElementById("instructions").classList.toggle("hidden");
+  });
   setUpCards();
 }
 
