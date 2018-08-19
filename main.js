@@ -1,14 +1,19 @@
+/*
+Memory Game created as prework for General Assembly's Web Development Immersive 2018
+Card files from https://sourceforge.net/projects/vector-cards/
+*/
 
 //Possible suites and values for a standard deck of cards
 const suites = ["Hearts", "Diamonds", "Clubs", "Spades"];
 const cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"];
 let won = false;
 
-
+//Game div
+let game = document.querySelector(".game");
 //For each card in play, creates an array containing the image element.
-let cards = document.querySelectorAll(".card");
+let cards = [];
 //The number of cards to be generated
-let numberOfCardsInPlay = cards.length;
+let numberOfCardsInPlay = 8;
 //Contains the Card objects of the game board.
 let currentBoard = [];
 //Contans the two cards that the player has selected.
@@ -20,13 +25,15 @@ let doneCards = [];
 
 //Used to create card objects
 class Card {
-  constructor(suite, value){
+  constructor(suite, value, elm){
   //Suite of Card
     this.suite = suite;
   //Value of Card
     this.value = value;
   //Appropriate card image file path
-    this.filePath = "playing-cards-assets/svg-cards/"+ value + "_of_" + suite + ".svg";
+    this.filePath = "svg-cards/"+ value + "_of_" + suite + ".svg";
+  //DOM Element Tied to Card object
+    this.elm = elm;
   }
 }
   let done = [];
@@ -53,7 +60,10 @@ function generateCards(){
     let card = randomCard(i);
     let check = card.suite + card.value;
     checkIfIncludes(done, check, card, i);
+    game.appendChild(card.elm);
+    game.appendChild(card.elm.cloneNode(true));
   }
+  cards = document.querySelectorAll('.card');
   shuffle(currentBoard);
   console.log(currentBoard);
 }
@@ -72,9 +82,14 @@ function shuffle(arr){
 
 //Randomly generates a suite and value.
 function randomCard(i){
+
   let suite = suites[Math.floor(Math.random() * 4)];
   let value = cardValues[Math.floor(Math.random() * 13)];
-  let card = new Card(suite, value);
+  let elm = document.createElement("img");
+  elm.setAttribute("alt", value + " of " + suite);
+  elm.setAttribute("src", "images/back.png")
+  elm.classList.add("card");
+  let card = new Card(suite, value, elm);
   return card;
 }
 
@@ -121,11 +136,11 @@ function checkForMatch(){
 function setUpCards(){
   generateCards();
   for (let i = 0; i < numberOfCardsInPlay; i++){
-      cards[i].setAttribute("alt", currentBoard[i].value + " of " + currentBoard[i].suite);
       cards[i].addEventListener("click", function(){
         if(!doneCards.includes(cards[i])){
           flipCard(i);
           cardsInPlay.push(cards[i]);
+          console.log(cardsInPlay);
           if(cardsInPlay.length > 1) checkForMatch();
         }
         if(doneCards.length == 8){
