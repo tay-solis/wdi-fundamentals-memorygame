@@ -1,6 +1,6 @@
 /*
 Memory Game created as prework for General Assembly's Web Development Immersive 2018
-Card files from https://sourceforge.net/projects/vector-cards/
+Card files from https://github.com/hayeah/playing-cards-assets/tree/331779f7069f45577119a677b8878b2bbd010302
 */
 
 //Possible suites and values for a standard deck of cards
@@ -64,7 +64,9 @@ function generateCards(){
     game.appendChild(card.elm.cloneNode(true));
   }
   cards = document.querySelectorAll('.card');
-  shuffle(currentBoard);
+  for(var i = game.children.length; i >= 0; i--){
+    game.appendChild(game.children[Math.random() * i | 0])
+  }
   console.log(currentBoard);
 }
 

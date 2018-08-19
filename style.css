@@ -70,15 +70,22 @@ main{
 }
 
 footer{
-  text-transform: uppercase;
+
   padding: 0 20px;
-  margin-bottom: 0;
-  font-family: 'Raleway', sans-serif;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
   background-color: #0D2C40;
-  color: white;
-  font-size: 12px;
-  letter-spacing: 0.8em;
   clear:both;
+}
+
+footer p{
+  text-transform: uppercase;
+  font-family: 'Raleway', sans-serif;
+
+  color: white;
+  font-size: 10px;
+  letter-spacing: 0.8em;
 }
 
 /* nav .selected{
