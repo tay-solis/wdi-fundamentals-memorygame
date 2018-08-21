@@ -21,6 +21,9 @@ let cardsInPlay = [];
 //Contains cards that have already been matched.
 let doneCards = [];
 
+//Easy and Hard Links
+let easyLink = document.getElementById("easyLink");
+let hardLink = document.getElementById("hardLink");
 
 
 //Used to create card objects
@@ -118,6 +121,10 @@ function findCard(arr, card){
 
 //Checks if the cards in play match. If they do, they are added to doneCards. If not, they are reset.
 function checkForMatch(){
+  if(cardsInPlay[0] === cardsInPlay[1]){
+    cardsInPlay = [];
+    return;
+  }
   if(cardsInPlay[0].getAttribute("alt") === cardsInPlay[1].getAttribute("alt")){
     console.log("Matched " + cardsInPlay[0].getAttribute("alt") + " and " + cardsInPlay[0].getAttribute("alt"));
     doneCards.push(cardsInPlay[0]);
@@ -128,7 +135,7 @@ function checkForMatch(){
       flipCard(findCard(cards, cardsInPlay[0]));
       flipCard(findCard(cards, cardsInPlay[1]));
       cardsInPlay = [];
-    }, 1000);
+    }, 500);
   }
 }
 
@@ -142,21 +149,56 @@ function setUpCards(){
         if(!doneCards.includes(cards[i])){
           flipCard(i);
           cardsInPlay.push(cards[i]);
-          console.log(cardsInPlay);
           if(cardsInPlay.length > 1) checkForMatch();
         }
-        if(doneCards.length == 8){
+        if(doneCards.length == numberOfCardsInPlay){
           document.getElementById("message").innerHTML = "Congrats! You win!";
         }
       });
   }
 }
 
+function reset(){
+  game.innerHTML = '';
+  cardsInPlay = [];
+  doneCards = [];
+  cards = [];
+  currentBoard = [];
+  document.getElementById("message").innerHTML = "";
+
+}
+
+function easyAndHard(){
+  easyLink.addEventListener("click", function(){
+    if(hardLink.classList.contains("selected")){
+      hardLink.classList.remove("selected");
+      easyLink.classList.add("selected");
+      numberOfCardsInPlay = 4;
+      reset();
+      setUpCards();
+    }
+  });
+  hardLink.addEventListener("click", function(){
+    if(easyLink.classList.contains("selected")){
+      easyLink.classList.remove("selected");
+      hardLink.classList.add("selected");
+      numberOfCardsInPlay = 8;
+      reset();
+      setUpCards();
+    }
+  });
+}
+
 function init(){
+  setUpCards();
   document.getElementById("instructionsLink").addEventListener("click", function(){
     document.getElementById("instructions").classList.toggle("hidden");
   });
-  setUpCards();
+  document.getElementById("resetLink").addEventListener("click", function(){
+    reset();
+    setUpCards();
+  });
+  easyAndHard();
 }
 
 init();
